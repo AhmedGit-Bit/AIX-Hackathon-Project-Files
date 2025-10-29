@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baseerah - Investment Analysis Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .logo span {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 100;
+            text-transform: uppercase;
+            font-size: 30px;
+        }
+        
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-bg: #f5f5f5;
+    --secondary-bg: #ffffff;
+    --card-bg: #ffffff;
+    --sidebar-bg: #031A35;
+    --text-primary: #2c2c2c;
+    --text-secondary: #6b6b6b;
+    --text-light: #ffffff;
+    --accent-cyan: #00b8d4;
+    --accent-green: #4caf50;
+    --accent-orange: #ff9800;
+    --border-color: #e0e0e0;
+    --hover-bg: #f9f9f9;
+    --sidebar-hover: #4a4a4a;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: var(--primary-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+/* Sidebar Navigation */
+nav {
+    background-color: var(--sidebar-bg);
+    width: 280px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 2rem;
+    margin-bottom: 3rem;
+}
+
+.nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    list-style: none;
+    flex: 1;
+    padding: 0 1rem;
+}
+
+.nav-links li {
+    width: 100%;
+}
+
+.nav-links a {
+    color: #b0b0b0;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1rem;
+}
+
+.nav-links a:hover {
+    color: var(--text-light);
+    background-color: var(--sidebar-hover);
+}
+
+.nav-links a.active {
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    color: var(--text-light);
+    cursor: pointer;
+    margin-top: auto;
+    border-top: 1px solid #4a4a4a;
+}
+
+/* Main Container */
+.container {
+    margin-left: 280px;
+    padding: 2rem 3rem;
+    /* Keep page slightly taller than the viewport without excessive scroll */
+    min-height: 110vh;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-radius: 80px;
+}
+
+/* Page Header */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.page-title {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.95rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent-cyan), #29B6F6);
+    color: white;
+    box-shadow: 0 4px 15px rgba(79, 195, 247, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(79, 195, 247, 0.4);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--hover-bg);
+}
+
+/* Dashboard Table */
+.table-container {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--border-color);
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background-color: var(--primary-bg);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    width: 300px;
+    border: 1px solid var(--border-color);
+}
+
+.search-box input {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    outline: none;
+    width: 100%;
+    margin-left: 0.5rem;
+}
+
+.search-box input::placeholder {
+    color: var(--text-secondary);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #fafafa;
+    border-bottom: 2px solid var(--border-color);
+}
+
+th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+td {
+    padding: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+tbody tr:hover {
+    background-color: var(--hover-bg);
+    cursor: pointer;
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.status-excellent {
+    background-color: rgba(102, 187, 106, 0.2);
+    color: var(--accent-green);
+}
+
+.status-good {
+    background-color: rgba(79, 195, 247, 0.2);
+    color: var(--accent-cyan);
+}
+
+.status-average {
+    background-color: rgba(255, 152, 0, 0.2);
+    color: var(--accent-orange);
+}
+
+.status-weak {
+    background-color: rgba(239, 83, 80, 0.2);
+    color: #EF5350;
+}
+
+/* IAI Score */
+.iai-score {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.score-bar {
+    width: 150px;
+    height: 6px;
+    background-color: var(--secondary-bg);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.score-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s;
+}
+
+/* Analysis Detail View */
+.detail-view {
+    display: none;
+}
+
+.detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.company-info {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.company-logo {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--accent-cyan), #29B6F6);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.metric-card {
+    background-color: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.metric-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.metric-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.metric-value {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.metric-change {
+    font-size: 0.85rem;
+    color: var(--accent-green);
+}
+
+.metric-change.negative {
+    color: #EF5350;
+}
+
+/* Score Breakdown */
+.score-breakdown {
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    margin-top: 2rem;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.score-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.score-item:last-child {
+    border-bottom: none;
+}
+
+.score-label {
+    font-weight: 500;
+}
+
+.score-value {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    margin: 5% auto;
+    padding: 2rem;
+    border-radius: 16px;
+    max-width: 600px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.close {
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+}
+
+.close:hover {
+    color: var(--text-primary);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--primary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--accent-cyan);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* File Upload */
+.file-upload {
+    border: 2px dashed var(--border-color);
+    padding: 2rem;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.file-upload:hover {
+    border-color: var(--accent-cyan);
+    background-color: var(--secondary-bg);
+}
+
+.file-upload input {
+    display: none;
+}
+
+/* Hidden class */
+.hidden {
+    display: none;
+}
+
+/* Page-specific styles */
+#documents-page .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    margin-top: 2rem;
+}
+
+.empty-state-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+/* Company Widget Card */
+.company-widget {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-top: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.company-widget:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    background-color: var(--secondary-bg);
+}
+
+.company-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.company-widget p {
+    margin: 0.35rem 0 0 0;
+}
+
+/* Analysis layout and badges */
+.analysis-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1rem;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid var(--border-color);
+}
+.badge-above {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--accent-green);
+}
+.badge-below {
+    background-color: rgba(255, 152, 0, 0.12);
+    color: var(--accent-orange);
+}
+
+.section h4 {
+    margin: 0 0 .5rem 0;
+}
+
+.kv-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.kv-table td {
+    padding: .5rem .6rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.kv-table tr:last-child td { border-bottom: none; }
+.kv-table td:first-child { color: var(--text-secondary); }
+
+/* Detailed Analysis sub-widgets */
+.subcard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 0.75rem;
+}
+.subcard {
+    background-color: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+}
+.subcard-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-transform: capitalize;
+}
+.subcard-body {
+    color: var(--text-secondary);
+    line-height: 1.5;
+    max-height: none;
+    overflow: visible;
+}
+
+/* Helpers to make a parent card span full width and keep inner grid scrollable */
+.metric-card.span-full { grid-column: 1 / -1; }
+.metric-card.scrollable {
+    max-height: none; /* Let parent expand to cover all sub-cards */
+    display: block;
+}
+.metric-card.scrollable .subcard-grid {
+    flex: 0 1 auto;
+    overflow: visible; /* Show full content without internal scroll */
+}
+
+
+
+    </style>
+
+
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav>
+        <div class="logo">
+            <img src="Basirah_Logo_Eye.png" alt="Baseerah Logo" onerror="this.onerror=null; this.src='images/Asset 10.png';" style="width: 30px; height: 30px; margin-right: 10px;">
+            <span>Basirah</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" class="nav-link active" data-page="dashboard">
+                <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7 14L8.79689 11.8437C9.50894 10.9893 9.86496 10.562 10.3333 10.562C10.8017 10.562 11.1577 10.9893 11.8698 11.8437L12.1302 12.1563C12.8423 13.0107 13.1983 13.438 13.6667 13.438C14.135 13.438 14.4911 13.0107 15.2031 12.1563L17 10" stroke="#ffff" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8" stroke="#ffff" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
+                <span>Dashboard</span>
+            </a></li>
+            <li><a href="#" class="nav-link" data-page="analysis">
+                <span>
+                    <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                    <svg width="20px" height="50 px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 9.5H21M3 14.5H21M8 4.5V19.5M6.2 19.5H17.8C18.9201 19.5 19.4802 19.5 19.908 19.282C20.2843 19.0903 20.5903 18.7843 20.782 18.408C21 17.9802 21 17.4201 21 16.3V7.7C21 6.5799 21 6.01984 20.782 5.59202C20.5903 5.21569 20.2843 4.90973 19.908 4.71799C19.4802 4.5 18.9201 4.5 17.8 4.5H6.2C5.0799 4.5 4.51984 4.5 4.09202 4.71799C3.71569 4.90973 3.40973 5.21569 3.21799 5.59202C3 6.01984 3 6.57989 3 7.7V16.3C3 17.4201 3 17.9802 3.21799 18.408C3.40973 18.7843 3.71569 19.0903 4.09202 19.282C4.51984 19.5 5.07989 19.5 6.2 19.5Z" stroke="#ffffffff" stroke-width="2"/>
+                    </svg>
+                </span>
+                <span>Analysis</span>
+            </a></li>
+        <div class="user-menu">
+            <span style="font-size: 1.5rem;">👤</span>
+            <span>Account</span>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Dashboard Page -->
+        <div id="dashboard-page" class="page">
+            <div class="page-header">
+                <h1 class="page-title">Investment Dashboard</h1>
+                <button class="btn btn-primary" onclick="openAddInvestmentModal()">
+                    + Add Investment
+                </button>
+            </div>
+
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>Investment Portfolio</h3>
+                    <div class="search-box">
+                        <span>🔍</span>
+                        <input type="text" id="dashboardSearch" placeholder="Search investments..." onkeyup="filterDashboardTable()">
+                    </div>
+                </div>
+                <table id="investmentTable">
+                    <thead>
+                        <tr>
+                            <th>Company Name</th>
+                            <th>Market Position</th>
+                            <th>Net Profit Margin</th>
+                            <th>Last Updated</th>
+                            <th>Overall Health Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="investmentTableBody">
+                        <!-- Sample data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            
+        </div>
+
+        <!-- Analysis Page -->
+        <div id="analysis-page" class="page hidden">
+            <div class="page-header">
+                <h1 class="page-title">Investment Analysis</h1>
+                <div class="search-box">
+                    <span>🔍</span>
+                    <input type="text" id="analysisSearch" placeholder="Search investments..." onkeyup="filterAnalysisList()">
+                </div>
+            </div>
+
+            <!-- Investment List View -->
+            <div id="analysis-list" class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Industry</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="analysisListBody">
+                        <!-- Will be populated dynamically -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Detailed Analysis View -->
+            <div id="analysis-detail" class="detail-view">
+                <button class="btn btn-secondary" onclick="showAnalysisList()" style="margin-bottom: 1rem;">
+                    ← Back to List
+                </button>
+
+                <div class="detail-header">
+                    <div class="company-info">
+                        <div class="company-logo" id="detailLogo"></div>
+                        <div>
+                            <h2 id="detailCompanyName"></h2>
+                            <p style="color: var(--text-secondary);" id="detailIndustry"></p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Ratios & Financial Summary in grid cards -->
+                <div class="section" style="margin-top:1rem;">
+                    <div class="analysis-grid">
+                        <div class="metric-card">
+                            <h4>Company Ratios</h4>
+                            <div class="ratios" id="ratios-company1"></div>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Financial Summary</h4>
+                            <div class="financial-summary" id="financial-company1"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Market Analysis -->
+                <div class="section" style="margin-top:1rem;">
+                    <h3>AI Market Analysis</h3>
+                    <div class="metric-card" style="margin-top:.75rem;">
+                        <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">
+                            <div style="display:flex; align-items:center; gap:.5rem;">
+                                <b>Overall Health Score:</b>
+                                <div class="iai-score">
+                                    <span id="health-number" style="color: var(--accent-green); font-weight:700; min-width:2ch;"></span>
+                                    <div class="score-bar" style="width: 200px;">
+                                        <div id="health-bar" class="score-fill" style="background: var(--accent-green);"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <b>Market Position:</b> <span id="position-company1" class="badge"></span>
+                            </div>
+                            <div>
+                                <b>Sector:</b> <span id="sector-company1"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analysis-grid" style="margin-top:1rem;">
+                        <div class="metric-card">
+                            <h4>Industry Comparison</h4>
+                            <div id="industry-company1"></div>
+                        </div>
+                        <div class="metric-card span-full scrollable">
+                            <h4>Detailed Analysis</h4>
+                            <div id="analysis-company1"></div>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Key Strengths</h4>
+                            <div id="strengths-company1"></div>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Key Weaknesses</h4>
+                            <div id="weaknesses-company1"></div>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Benchmarks Used</h4>
+                            <div id="benchmarks-company1"></div>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Market Context</h4>
+                            <div id="context-company1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- Add Investment Modal -->
+    <div id="addInvestmentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Investment</h2>
+                <span class="close" onclick="closeAddInvestmentModal()">&times;</span>
+            </div>
+            <form id="addInvestmentForm" onsubmit="addInvestment(event)">
+                <div class="form-group">
+                    <label>Company Name</label>
+                    <input type="text" id="companyName">
+                </div>
+                <div class="form-group">
+                    <label>Industry</label>
+                    <select id="industry">
+                        <option value="">Select Industry</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Finance">Finance</option>
+                        <option value="E-commerce">E-commerce</option>
+                        <option value="Manufacturing">Manufacturing</option>
+                        <option value="Education">Education</option>
+                        <option value="Real Estate">Real Estate</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Funding Round</label>
+                    <select id="fundingRound">
+                        <option value="">Select Round</option>
+                        <option value="Seed">Seed</option>
+                        <option value="Series A">Series A</option>
+                        <option value="Series B">Series B</option>
+                        <option value="Series C">Series C</option>
+                        <option value="Series D+">Series D+</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Amount Requested</label>
+                    <input type="text" id="amountRequested" placeholder="e.g., $1,000,000">
+                </div>
+                <div class="form-group">
+                    <label>Upload Financial Statement</label>
+                    <div class="file-upload" onclick="document.getElementById('fileInput').click()">
+                        <input type="file" id="fileInput" accept=".pdf,.xlsx,.xls,.doc,.docx">
+                        <p>📁 Click to upload or drag and drop</p>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem;">PDF, Excel, or Word documents</p>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                    Add Investment
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Sample data structure (will be replaced by API calls)
+        let investments = [
+            {
+                id: 1,
+                company: "Baladna Q.P.S.C.",
+                industry: "",
+                fundingRound: "",
+                amount: "",
+                lastUpdated: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+            },
+            {
+                id: 2,
+                company: "Aurora Tech Solutions Ltd.",
+                industry: "",
+                fundingRound: "",
+                amount: "",
+                lastUpdated: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+            }
+        ];
+
+        // Navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const page = this.dataset.page;
+                showPage(page);
+                
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        function showPage(pageName) {
+            document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
+            document.getElementById(pageName + '-page').classList.remove('hidden');
+            
+            if (pageName === 'dashboard') {
+                renderDashboardTable();
+            } else if (pageName === 'analysis') {
+                renderAnalysisList();
+            }
+        }
+
+        // Dashboard functions
+        
+
+        async function renderDashboardTable() {
+            const tbody = document.getElementById('investmentTableBody');
+            tbody.innerHTML = '';
+            try {
+                const companies = ["Baladna Q.P.S.C.", "Aurora Tech Solutions Ltd."];
+                const [aiJson, ratiosJson] = await Promise.all([
+                    fetchJson('ai_market_analysis.json'),
+                    fetchJson('company_ratios.json')
+                ]);
+
+                companies.forEach((company) => {
+                    const ai = Array.isArray(aiJson) ? aiJson.find(x => x.company === company) : null;
+                    const ratios = Array.isArray(ratiosJson) ? ratiosJson.find(x => x.company === company) : null;
+
+                    const overall = ai && ai.overall_health_score !== undefined ? ai.overall_health_score : '--';
+                    let position = '--';
+                    if (ai && ai.industry_comparison && ai.industry_comparison.profitability) {
+                        position = ai.industry_comparison.profitability === 'Above Market' ? 'Above Market' : 'Below Market';
+                    }
+                    const npm = ratios && typeof ratios.net_profit_margin_percent !== 'undefined'
+                        ? (typeof ratios.net_profit_margin_percent === 'number' ? ratios.net_profit_margin_percent.toFixed(2) : ratios.net_profit_margin_percent) + '%'
+                        : '--';
+
+                    const row = tbody.insertRow();
+                    row.onclick = function(){ openCompanyAnalysis(company); };
+                    const overallNum = (typeof overall === 'number') ? overall : (function(v){ var n = parseFloat(v); return isNaN(n) ? 0 : n; })(overall);
+                    row.innerHTML = `
+                        <td><strong>${company}</strong></td>
+                        <td>${position}</td>
+                        <td>${npm}</td>
+                        <td>${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                        <td>
+                            <div class="iai-score">
+                                <span style="color: var(--accent-green); font-weight:700; min-width:2ch;">${overallNum}</span>
+                                <div class="score-bar">
+                                    <div class="score-fill" style="width: ${overallNum}%; background: var(--accent-green);"></div>
+                                </div>
+                            </div>
+                        </td>
+                    `;
+                });
+            } catch (e) {
+                const row = tbody.insertRow();
+                row.innerHTML = `<td colspan=\"5\">Error loading dashboard data</td>`;
+                console.error(e);
+            }
+        }
+
+        function filterDashboardTable() {
+            const input = document.getElementById('dashboardSearch').value.toLowerCase();
+            const tbody = document.getElementById('investmentTableBody');
+            const rows = tbody.getElementsByTagName('tr');
+            
+            for (let row of rows) {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(input) ? '' : 'none';
+            }
+        }
+
+        // Analysis page functions
+        function renderAnalysisList() {
+            const tbody = document.getElementById('analysisListBody');
+            tbody.innerHTML = '';
+            
+            investments.forEach(inv => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td><strong>${inv.company}</strong></td>
+                    <td>${inv.industry}</td>
+                    <td><button class="btn btn-secondary" onclick="openCompanyAnalysis('${inv.company.replace(/'/g, "\\'")}')">View Analysis</button></td>
+                `;
+            });
+        }
+
+        function filterAnalysisList() {
+            const input = document.getElementById('analysisSearch').value.toLowerCase();
+            const tbody = document.getElementById('analysisListBody');
+            const rows = tbody.getElementsByTagName('tr');
+            
+            for (let row of rows) {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(input) ? '' : 'none';
+            }
+        }
+
+        function showAnalysisList() {
+            document.getElementById('analysis-list').style.display = 'block';
+            document.getElementById('analysis-detail').style.display = 'none';
+        }
+
+        function showInvestmentDetail(id) {
+            const investment = investments.find(inv => inv.id === id);
+            if (!investment) return;
+            
+            document.getElementById('analysis-list').style.display = 'none';
+            document.getElementById('analysis-detail').style.display = 'block';
+            
+            // Populate detail view
+            document.getElementById('detailLogo').textContent = investment.company.charAt(0);
+            document.getElementById('detailCompanyName').textContent = investment.company;
+            document.getElementById('detailIndustry').textContent = investment.industry;
+            // Judged metrics removed per request
+        }
+
+        function viewInvestmentDetail(id) {
+            const inv = investments.find(x => x.id === id);
+            if (inv) openCompanyAnalysis(inv.company);
+        }
+
+        // Modal functions
+        function openAddInvestmentModal() {
+            document.getElementById('addInvestmentModal').style.display = 'block';
+        }
+
+        function closeAddInvestmentModal() {
+            document.getElementById('addInvestmentModal').style.display = 'none';
+            document.getElementById('addInvestmentForm').reset();
+        }
+
+        function addInvestment(event) {
+            event.preventDefault();
+            
+            const newInvestment = {
+                id: investments.length + 1,
+                company: document.getElementById('companyName').value,
+                industry: document.getElementById('industry').value,
+                fundingRound: document.getElementById('fundingRound').value,
+                amount: document.getElementById('amountRequested').value,
+                iaiScore: Math.floor(Math.random() * 30) + 70, // Placeholder
+                status: "Pending Analysis",
+                lastUpdated: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+                scores: {
+                    profitability: 0,
+                    valuation: 0,
+                    financial: 0,
+                    growth: 0,
+                    risk: 0,
+                    market: 0,
+                    governance: 0,
+                    competitive: 0
+                }
+            };
+            
+            investments.push(newInvestment);
+            renderDashboardTable();
+            closeAddInvestmentModal();
+            
+            // This is where you'd make an API call:
+            // fetch('/api/investments', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(newInvestment)
+            // }).then(response => response.json()).then(data => {
+            //     console.log('Investment added:', data);
+            // });
+        }
+
+        // Helper functions
+        // Removed score color/status helpers as judged metrics are no longer displayed
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('addInvestmentModal');
+            if (event.target === modal) {
+                closeAddInvestmentModal();
+            }
+        }
+
+        // File upload handler
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name;
+            if (fileName) {
+                const uploadDiv = document.querySelector('.file-upload');
+                uploadDiv.innerHTML = `
+                    <p>✅ ${fileName}</p>
+                    <p style="color: var(--accent-green); font-size: 0.85rem;">File ready to upload</p>
+                `;
+            }
+        });
+
+        // Documents page upload/analysis handlers (guarded as Documents page may be removed)
+        const docInput = document.getElementById('docUploadInput');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const calcRatiosBtn = document.getElementById('calcRatiosBtn');
+        const aiAnalysisBtn = document.getElementById('aiAnalysisBtn');
+        const extractionJsonEl = document.getElementById('extractionJson');
+        const analysisJsonEl = document.getElementById('analysisJson');
+
+        if (docInput && uploadBtn && calcRatiosBtn && aiAnalysisBtn && extractionJsonEl && analysisJsonEl) {
+            let lastExtraction = null; // store last extraction result
+            let lastRatios = null;
+
+            uploadBtn.addEventListener('click', async () => {
+                if (!docInput.files || docInput.files.length === 0) {
+                    alert('Please choose a PDF to upload');
+                    return;
+                }
+
+                const file = docInput.files[0];
+                const form = new FormData();
+                form.append('file', file, file.name);
+
+                extractionJsonEl.textContent = 'Uploading and extracting...';
+
+                try {
+                    const resp = await fetch('/api/extract', { method: 'POST', body: form });
+                    const data = await resp.json();
+                    if (resp.ok && data.extraction) {
+                        lastExtraction = data.extraction;
+                        extractionJsonEl.textContent = JSON.stringify(data.extraction, null, 2);
+                        analysisJsonEl.textContent = '';
+                        lastRatios = null;
+                    } else {
+                        extractionJsonEl.textContent = JSON.stringify(data, null, 2);
+                    }
+                } catch (err) {
+                    extractionJsonEl.textContent = 'Error: ' + err;
+                }
+            });
+
+            calcRatiosBtn.addEventListener('click', async () => {
+                if (!lastExtraction) {
+                    alert('No extraction results available. Please extract data first.');
+                    return;
+                }
+
+                analysisJsonEl.textContent = 'Calculating ratios...';
+                try {
+                    const resp = await fetch('/api/ratios', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(lastExtraction)
+                    });
+                    const data = await resp.json();
+                    if (resp.ok && data.ratios) {
+                        lastRatios = data.ratios;
+                        analysisJsonEl.textContent = JSON.stringify({ ratios: data.ratios }, null, 2);
+                    } else {
+                        analysisJsonEl.textContent = JSON.stringify(data, null, 2);
+                    }
+                } catch (err) {
+                    analysisJsonEl.textContent = 'Error: ' + err;
+                }
+            });
+
+            aiAnalysisBtn.addEventListener('click', async () => {
+                if (!lastRatios) {
+                    alert('No ratios available. Calculate ratios first.');
+                    return;
+                }
+
+                analysisJsonEl.textContent = 'Running AI market analysis... (this may take a while)';
+                try {
+                    const resp = await fetch('/api/market_analysis', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(lastRatios)
+                    });
+                    const data = await resp.json();
+                    if (resp.ok && data.analysis) {
+                        analysisJsonEl.textContent = JSON.stringify(data.analysis, null, 2);
+                    } else {
+                        analysisJsonEl.textContent = JSON.stringify(data, null, 2);
+                    }
+                } catch (err) {
+                    analysisJsonEl.textContent = 'Error: ' + err;
+                }
+            });
+        }
+
+    // Initialize dashboard on page load
+    renderDashboardTable();
+
+    // Load company analysis from local JSON files
+    const COMPANY_NAME = 'Baladna Q.P.S.C.';
+
+        async function fetchJson(path) {
+            const resp = await fetch(path, { cache: 'no-store' });
+            if (!resp.ok) throw new Error('Failed to load ' + path);
+            return resp.json();
+        }
+
+        function setHTML(id, html) {
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = html;
+        }
+
+        function setText(id, text) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = text;
+        }
+
+        function formatNumber(n) {
+            try { return Number(n).toLocaleString() + ' QAR'; } catch { return n + ' QAR'; }
+        }
+
+        function renderRatios(r) {
+            if (!r) { setHTML('ratios-company1', '<em>No ratios found.</em>'); return; }
+                        const percentEntries = Object.entries(r)
+                            .filter(([k,v]) => k.endsWith('_percent'))
+                            .map(([k,v]) => ({ key: k.split('_').join(' '), value: (typeof v === 'number' ? v.toFixed(2) : v) + '%' }));
+            if (percentEntries.length === 0) { setHTML('ratios-company1', '<em>No percentage ratios.</em>'); return; }
+            const rows = percentEntries.map(({key,value}) => `
+                <tr>
+                    <td>${key}</td>
+                    <td style="font-weight:600; text-align:right;">${value}</td>
+                </tr>`).join('');
+            setHTML('ratios-company1', `<table class="kv-table">${rows}</table>`);
+        }
+
+        function renderFinancialSummary(fs) {
+            if (!fs) { setHTML('financial-company1', '<em>No financial summary found.</em>'); return; }
+            const p = fs.profit_and_loss || {};
+            const items = [
+                ['Net Worth', fs.net_worth],
+                ['Liabilities', fs.liabilities],
+                ['Equity', fs.equity],
+                ['Total Revenue', p.total_revenue],
+                ['Total Expenses', p.total_expenses],
+                ['Net Profit/Loss', p.net_profit_or_loss]
+            ].filter(([,v]) => v !== undefined);
+            const rows = items.map(([k,v]) => `
+                <tr>
+                    <td>${k}</td>
+                    <td style="font-weight:600; text-align:right;">${formatNumber(v)}</td>
+                </tr>`).join('');
+            setHTML('financial-company1', `<table class="kv-table">${rows}</table>`);
+        }
+
+        function renderAIAnalysis(ai) {
+            if (!ai) {
+                setText('health-number', '');
+                const hb = document.getElementById('health-bar'); if (hb) hb.style.width = '0%';
+                setHTML('industry-company1', '');
+                setHTML('strengths-company1', '');
+                setHTML('weaknesses-company1', '');
+                const mp = document.getElementById('position-company1'); if (mp) { mp.textContent = ''; mp.className = 'badge'; }
+                setText('sector-company1', '');
+                setHTML('analysis-company1', '');
+                setHTML('benchmarks-company1', '');
+                setHTML('context-company1', '');
+                return;
+            }
+            // 1. overall_health_score
+            if (ai.overall_health_score !== undefined) {
+                const num = typeof ai.overall_health_score === 'number' ? ai.overall_health_score : parseFloat(ai.overall_health_score) || 0;
+                setText('health-number', num);
+                const hb = document.getElementById('health-bar'); if (hb) hb.style.width = Math.max(0, Math.min(100, num)) + '%';
+            }
+            // 2. industry_comparison (object)
+            if (ai.industry_comparison) {
+                const ic = ai.industry_comparison;
+                const icList = Object.entries(ic).map(([k,v]) => `<li><b>${k}:</b> ${v}</li>`).join('');
+                setHTML('industry-company1', `<ul style="padding-left:1.2rem;">${icList}</ul>`);
+            }
+            // 3. key_strengths (array)
+            if (Array.isArray(ai.key_strengths)) {
+                const sList = ai.key_strengths.map(s => `<li>${s}</li>`).join('');
+                setHTML('strengths-company1', `<ul style="padding-left:1.2rem;">${sList}</ul>`);
+            }
+            // 4. key_weaknesses (array)
+            if (Array.isArray(ai.key_weaknesses)) {
+                const wList = ai.key_weaknesses.map(s => `<li>${s}</li>`).join('');
+                setHTML('weaknesses-company1', `<ul style="padding-left:1.2rem;">${wList}</ul>`);
+            }
+            // 5. market_position (string)
+            if (ai.industry_comparison && ai.industry_comparison.profitability) {
+                const el = document.getElementById('position-company1');
+                if (el) {
+                    const above = ai.industry_comparison.profitability === 'Above Market';
+                    el.textContent = above ? 'Above Market' : 'Below Market';
+                    el.className = 'badge ' + (above ? 'badge-above' : 'badge-below');
+                }
+            }
+            // sector under summary
+            if (ai.market_context && ai.market_context.sector) {
+                setText('sector-company1', ai.market_context.sector);
+            }
+            // 6. detailed_analysis (render as sub-widgets grid)
+            if (ai.detailed_analysis) {
+                const da = ai.detailed_analysis;
+                const cards = Object.entries(da).map(([k, v]) => {
+                    const title = k.split('_').join(' ');
+                    return `
+                        <div class="subcard">
+                            <div class="subcard-title">${title}</div>
+                            <div class="subcard-body">${v}</div>
+                        </div>
+                    `;
+                }).join('');
+                setHTML('analysis-company1', `<div class="subcard-grid">${cards}</div>`);
+            }
+            // 7. benchmarks_used (object)
+            if (ai.benchmarks_used) {
+                const b = ai.benchmarks_used;
+                const entries = Object.entries(b).map(([k,v]) => {
+                    if (Array.isArray(v)) {
+                        const li = v.map(x=>`<li>${x}</li>`).join('');
+                        return `<li><b>${k.split('_').join(' ')}:</b><ul>${li}</ul></li>`;
+                    }
+                    return `<li><b>${k.split('_').join(' ')}:</b> ${v}</li>`;
+                }).join('');
+                setHTML('benchmarks-company1', `<ul style="padding-left:1.2rem;">${entries}</ul>`);
+            }
+            // 8. market_context (object)
+            if (ai.market_context) {
+                const mc = ai.market_context;
+                const entries = Object.entries(mc).map(([k,v]) => {
+                    if (Array.isArray(v)) {
+                        const li = v.map(x=>`<li>${x}</li>`).join('');
+                        return `<li><b>${k.split('_').join(' ')}:</b><ul>${li}</ul></li>`;
+                    }
+                    return `<li><b>${k.split('_').join(' ')}:</b> ${v}</li>`;
+                }).join('');
+                setHTML('context-company1', `<ul style="padding-left:1.2rem;">${entries}</ul>`);
+            }
+        }
+
+        async function openCompanyAnalysis(companyName) {
+            // Switch to Analysis page and show detail view
+            showPage('analysis');
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            const analysisNav = document.querySelector('[data-page="analysis"]');
+            if (analysisNav) analysisNav.classList.add('active');
+            const listEl = document.getElementById('analysis-list');
+            const detailEl = document.getElementById('analysis-detail');
+            if (listEl && detailEl) { listEl.style.display = 'none'; detailEl.style.display = 'block'; }
+
+            // Set header
+            const title = document.getElementById('detailCompanyName');
+            const logo = document.getElementById('detailLogo');
+            const industryEl = document.getElementById('detailIndustry');
+            if (title) title.textContent = companyName;
+            if (logo) logo.textContent = (companyName ? companyName.charAt(0) : '');
+
+            try {
+                // AI market analysis first (to get sector as industry label if available)
+                const aiJson = await fetchJson('ai_market_analysis.json');
+                const ai = Array.isArray(aiJson) ? aiJson.find(x => x.company === companyName) : null;
+                if (industryEl) {
+                    const sector = ai && ai.market_context ? ai.market_context.sector : '';
+                    industryEl.textContent = sector || '';
+                }
+                // also show sector in AI summary card
+                const sectorEl = document.getElementById('sector-company1');
+                if (sectorEl) {
+                    const sector = ai && ai.market_context ? ai.market_context.sector : '';
+                    sectorEl.textContent = sector || '';
+                }
+                renderAIAnalysis(ai);
+
+                // Ratios
+                const ratiosJson = await fetchJson('company_ratios.json');
+                const ratios = Array.isArray(ratiosJson) ? ratiosJson.find(x => x.company === companyName) : null;
+                renderRatios(ratios);
+
+                // Financial summary
+                const fsJson = await fetchJson('financial_summary.json');
+                const fs = Array.isArray(fsJson) ? fsJson.find(x => x.company === companyName) : null;
+                renderFinancialSummary(fs);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        // API Integration Points:
+        // 1. GET /api/investments - Fetch all investments
+        // 2. POST /api/investments - Add new investment
+        // 3. GET /api/investments/:id - Get detailed analysis
+        // 4. PUT /api/investments/:id - Update investment
+        // 5. DELETE /api/investments/:id - Remove investment
+        // 6. POST /api/documents/due-diligence - Generate document
+    </script>
+</body>
+</html>

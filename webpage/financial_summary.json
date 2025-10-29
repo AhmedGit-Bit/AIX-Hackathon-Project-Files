@@ -1,0 +1,44 @@
+[
+    {
+        "company": "Aurora Tech Solutions Ltd.",
+        "net_worth": 200500,
+        "liabilities": 110000,
+        "equity": 200500,
+        "profit_and_loss": {
+            "total_revenue": 80000,
+            "total_expenses": 42000,
+            "net_profit_or_loss": 38000
+        },
+        "source_file": "PDF_files\\Aurora_Tech_Solutions_Financial_Report.pdf"
+    },
+    {
+        "company": "Baladna Q.P.S.C.",
+        "net_worth": 2765531670,
+        "liabilities": 2482991256,
+        "equity": 2765531670,
+        "profit_and_loss": {
+            "total_revenue": 642507960,
+            "total_expenses": 597807108,
+            "net_profit_or_loss": 331198107
+        },
+        "source_file": "PDF_files\\Baladna_Financial_Documents.pdf"
+    },
+    {
+        "company": "NeuralCore Technologies Ltd.",
+        "net_worth": -47500,
+        "liabilities": 170000,
+        "equity": -47500,
+        "profit_and_loss": {
+            "total_revenue": 95000,
+            "total_expenses": 368000,
+            "net_profit_or_loss": -273000
+        },
+        "source_file": "PDF_files\\NeuralCore_Financial_Report_2025.pdf"
+    },
+    {
+        "source_file": "c:\\Users\\Ahmed\\Desktop\\AIX Hackathon\\Google Gemini Integration\\PDF_files\\d8dbee4f781e42618a023e05034b0dde_Aurora_Tech_Solutions_Financial_Report.pdf",
+        "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit.\\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 50\\nPlease retry in 43.958895777s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-pro'}, 'quotaValue': '50'}]}, {'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '43s'}]}}",
+        "company": "DemoCoSync",
+        "industry": "Technology"
+    }
+]
