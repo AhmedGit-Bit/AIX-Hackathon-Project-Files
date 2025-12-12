@@ -5,7 +5,7 @@ from google.genai import types
 
 
 # --- CONFIG ---
-GEMINI_API_KEY = "AIzaSyDypFnhI414PHOFko39rSP33iWK4PugCBE"
+GEMINI_API_KEY = "YOUR_GEMINI_API_KEY_"
 client = genai.Client(api_key=GEMINI_API_KEY)
 
 
